@@ -3,12 +3,16 @@ package exception
 import (
 	"kykurniawan/go-restful-api/helper"
 	"kykurniawan/go-restful-api/model/web"
+	"log"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
 )
 
 func ErrorHandler(writer http.ResponseWriter, request *http.Request, err interface{}) {
+
+	log.Println("[ERROR]", request.Method, ":", request.URL.Path, err)
+
 	if notFoundError(writer, request, err) {
 		return
 	}
@@ -35,7 +39,6 @@ func internalServerError(writer http.ResponseWriter, request *http.Request, err 
 
 func notFoundError(writer http.ResponseWriter, request *http.Request, err interface{}) bool {
 	exception, ok := err.(NotFoundError)
-
 	if ok {
 		writer.Header().Set("Content-Type", "application/json")
 		writer.WriteHeader(http.StatusNotFound)
