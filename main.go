@@ -6,6 +6,7 @@ import (
 	"kykurniawan/go-restful-api/database"
 	"kykurniawan/go-restful-api/exception"
 	"kykurniawan/go-restful-api/helper"
+	"kykurniawan/go-restful-api/middleware"
 	"kykurniawan/go-restful-api/repository"
 	"kykurniawan/go-restful-api/service"
 	"net/http"
@@ -35,7 +36,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    "127.0.0.1:3000",
-		Handler: router,
+		Handler: middleware.NewAuthMiddleware(router),
 	}
 
 	fmt.Println("server listening on port 3000")
