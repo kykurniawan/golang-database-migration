@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"kykurniawan/go-restful-api/controller"
 	"kykurniawan/go-restful-api/database"
+	"kykurniawan/go-restful-api/exception"
 	"kykurniawan/go-restful-api/helper"
 	"kykurniawan/go-restful-api/repository"
 	"kykurniawan/go-restful-api/service"
@@ -29,6 +30,8 @@ func main() {
 	router.POST("/api/categories", categoryController.Create)
 	router.PUT("/api/categories/:categoryId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
+
+	router.PanicHandler = exception.ErrorHandler
 
 	server := http.Server{
 		Addr:    "127.0.0.1:3000",
