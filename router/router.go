@@ -26,11 +26,6 @@ func NewRouter(categoryController controller.CategoryController) *httprouter.Rou
 	router.PUT("/api/categories/:categoryId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
 
-	// router.PanicHandler = func(w http.ResponseWriter, r *http.Request, err interface{}) {
-	// 	log.Println(r.URL.Path, err)
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// }
-
 	router.PanicHandler = exception.ErrorHandler
 
 	return router
