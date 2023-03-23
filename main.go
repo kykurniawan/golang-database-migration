@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 func NewServer(authMiddleware *middleware.AuthMiddleware) *http.Server {
@@ -14,6 +15,10 @@ func NewServer(authMiddleware *middleware.AuthMiddleware) *http.Server {
 		Addr:    "127.0.0.1:3000",
 		Handler: authMiddleware,
 	}
+}
+
+func init() {
+	godotenv.Load(".env")
 }
 
 func main() {

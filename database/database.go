@@ -2,12 +2,21 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 	"kykurniawan/go-restful-api/helper"
+	"os"
 	"time"
 )
 
 func NewDB() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/go_restful_api")
+	mysqlUser := os.Getenv("MYSQL_USERNAME")
+	mysqlPass := os.Getenv("MYSQL_PASSWORD")
+	mysqlHost := os.Getenv("MYSQL_HOSTNAME")
+	mysqlPort := os.Getenv("MYSQL_PORT")
+	mysqlDB := os.Getenv("MYSQL_DATABASE")
+
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", mysqlUser, mysqlPass, mysqlHost, mysqlPort, mysqlDB))
+
 	helper.PanicIfError(err)
 
 	db.SetMaxIdleConns(5)
